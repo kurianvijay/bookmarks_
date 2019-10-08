@@ -17,10 +17,12 @@ describe Bookmark do
     end
   end
 
-  # describe '.add' do
-  #   it 'allows us to add bookmarks' do
-  #     bookmarks = Bookmark.add
-  #     expect(bookmarks).to include("http://www.netflix.com")
-  #   end
-  # end
+  describe '.add' do
+    it 'allows us to add bookmarks' do
+      bookmarks = Bookmark.add
+      connection = PG.connect(dbname: 'bookmark_manager_test')
+      connection.exec("INSERT INTO bookmarks (url) VALUES ('http://www.amazon.com');")
+      expect(bookmarks).to include("http://www.netflix.com")
+    end
+  end
 end

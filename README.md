@@ -21,10 +21,19 @@ I would like to add the site's address and title to bookmark manager`
 Objects | Messages
 bookmark | add_bookmarks
 
+User Story - 3
+
+``
 
 
 
-Database Set-up:
+Database Set-up:bookmark_manager
+`1 - Connect to psql
+2 - Create the database using the psql command CREATE DATABASE bookmark_manager;
+3 - Connect to the database using the pqsl command \c bookmark_manager;
+4 - Run the query we have saved in the file 01_create_bookmarks_table.sql`
+
+Test Database Set-up: bookmark_manager_test
 `1 - Connect to psql
 2 - Create the database using the psql command CREATE DATABASE bookmark_manager;
 3 - Connect to the database using the pqsl command \c bookmark_manager;
