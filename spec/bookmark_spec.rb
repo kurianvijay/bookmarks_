@@ -29,7 +29,7 @@ describe Bookmark do
       bookmark = Bookmark.add(title: 'Favourite shop', url: 'http://www.amazon.com')
       # persisted_data = PG.connect(dbname: 'bookmark_manager_test').query("SELECT * FROM bookmarks WHERE id = #{bookmark.id};")
       persisted_data = persisted_data(id: bookmark.id)
-      
+
       expect(bookmark).to be_a Bookmark
       expect(bookmark.id).to eq persisted_data.first['id']
       expect(bookmark.title).to eq 'Favourite shop'
