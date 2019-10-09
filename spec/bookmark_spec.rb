@@ -26,9 +26,14 @@ describe Bookmark do
 
   describe '.add' do
     it 'allows us to add bookmarks' do
-      bookmark = Bookmark.add(title: 'Favourite shop', url: 'http://www.amazon.com').first
-      expect(bookmark['url']).to eq('http://www.amazon.com')
-      expect(bookmark['title']).to eq('Favourite shopping site')
+      bookmark = Bookmark.add(title: 'Favourite shop', url: 'http://www.amazon.com')
+      # persisted_data = PG.connect(dbname: 'bookmark_manager_test').query("SELECT * FROM bookmarks WHERE id = #{bookmark.id};")
+      persisted_data = persisted_data(id: bookmark.id)
+      
+      expect(bookmark).to be_a Bookmark
+      expect(bookmark.id).to eq persisted_data.first['id']
+      expect(bookmark.title).to eq 'Favourite shop'
+      expect(bookmark.url).to eq 'http://www.amazon.com'
     end
   end
 end
