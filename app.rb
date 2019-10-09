@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'sinatra/flash'
+# require 'sinatra/flash'
 require 'sinatra/base'
 require './lib/bookmark'
 
@@ -19,7 +19,7 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/bookmarks' do
-    Bookmark.add(params['url'])
+    Bookmark.add(title: params[:title], url: params[:url])
     redirect '/bookmarks'
   end
 
