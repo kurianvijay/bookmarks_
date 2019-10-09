@@ -1,5 +1,5 @@
 
-
+require 'database_helpers'
 require 'bookmark'
 
 describe Bookmark do
@@ -7,24 +7,28 @@ describe Bookmark do
     it 'returns all bookmarks' do
       connection = PG.connect(dbname: 'bookmark_manager_test')
 
-      connection.exec("INSERT INTO bookmarks (title, url) VALUES ('Favourite Academy', 'http://www.makersacademy.com');")
-      connection.exec("INSERT INTO bookmarks (title, url) VALUES('Favourite destruction', 'http://www.destroyallsoftware.com');")
-      connection.exec("INSERT INTO bookmarks (title, url) VALUES('Favourite search engine', 'http://www.google.com');")
+      bookmark = Bookmark.add(url: 'http://www.makersacademy.com', title: 'Favourite Academy' )
+      Bookmark.add(url: 'http://www.destroyallsoftware.com', title: 'Favourite destruction'  )
+      Bookmark.add(url: 'http://www.google.com', title: 'Favourite search engine')
+      # connection.exec("INSERT INTO bookmarks (url, title) VALUES ('http://www.makersacademy.com', 'Favourite Academy');")
+      # connection.exec("INSERT INTO bookmarks (title, url) VALUES('Favourite destruction', 'http://www.destroyallsoftware.com');")
+      # connection.exec("INSERT INTO bookmarks (title, url) VALUES('Favourite search engine', 'http://www.google.com');")
 
-      bookmarks = Bookmark.all #==>let(:bookmarks) { Bookmark.all }
+      bookmarks = Bookmark.all
 
-      expect(bookmarks).to include('http://www.makersacademy.com')
-      expect(bookmarks).to include('Favourite Academy')
-      expect(bookmarks).to include('http://www.destroyallsoftware.com')
-      expect(bookmarks).to include('http://www.google.com')
+      expect(bookmarks.length).to eq 3
+       expect(bookmarks.first).to be_a Bookmark
+       expect(bookmarks.first.id).to eq bookmark.id
+       expect(bookmarks.first.title).to eq 'Favourite Academy'
+       expect(bookmarks.first.url).to eq 'http://www.makersacademy.com'
     end
   end
 
   describe '.add' do
     it 'allows us to add bookmarks' do
-      Bookmark.add(title: 'Favourite shop', url: 'http://www.amazon.com')
-      expect(Bookmark.all).to include('http://www.amazon.com')
-      expect(Bookmark.all).to include('Favourite shopping site')
+      bookmark = Bookmark.add(title: 'Favourite shop', url: 'http://www.amazon.com').first
+      expect(bookmark['url']).to eq('http://www.amazon.com')
+      expect(bookmark['title']).to eq('Favourite shopping site')
     end
   end
 end
