@@ -8,3 +8,4 @@ gem 'capybara', group: :test
 gem 'pg'
 gem 'rspec', group: :test
 gem 'sinatra'
+gem 'sinatra-flash'
