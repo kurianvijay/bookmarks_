@@ -25,7 +25,7 @@ describe Bookmark do
   end
 
   describe '.add' do
-    it 'allows us to add bookmarks' do
+    it 'allows us to add bookmark' do
       bookmark = Bookmark.add(title: 'Favourite shop', url: 'http://www.amazon.com')
       # persisted_data = PG.connect(dbname: 'bookmark_manager_test').query("SELECT * FROM bookmarks WHERE id = #{bookmark.id};")
       persisted_data = persisted_data(id: bookmark.id)
@@ -34,6 +34,17 @@ describe Bookmark do
       expect(bookmark.id).to eq persisted_data.first['id']
       expect(bookmark.title).to eq 'Favourite shop'
       expect(bookmark.url).to eq 'http://www.amazon.com'
+    end
+  end
+
+  describe '.delete' do
+    it 'allows us to delete a bookmark' do
+      bookmark = Bookmark.add(title: 'Favourite shop', url: 'http://www.amazon.com')
+      
+      Bookmark.delete(bookmark.id)
+      bookmarks = Bookmark.all
+      expect(bookmarks).not_to include('Favourite shop')
+      expect(bookmarks).not_to include('http://www.amazon.com')
     end
   end
 end
