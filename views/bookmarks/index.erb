@@ -1,10 +1,35 @@
+<!DOCTYPE html>
+<html>
+   <body>
+      <style>
+      p.serif { font-family: "Courier New", Helvetica, serif;
+    }
+    </style>
+   </body>
+<body>
+
+<h1>
+<p class="serif"> Bookmark Manager </p></h1>
+</body>
+</html>
+
+
+</html>
 <ul>
   <% @bookmarks.each do |bookmark| %>
 
-    <li>
-      <a href="<%= bookmark.url %>">
-        <%= bookmark.title %>
+    <li class="bookmark" id="bookmark-<%= bookmark.id %>">
+      <a href="<%= bookmark.url %>" target="_blank">
+        <%= bookmark.title %> <%= bookmark.id %>
       </a>
+      <form action="/bookmarks/<%= bookmark.id%>" method="post">
+      <input type='hidden' name='_method' value='DELETE'>
+      <!-- #this is a hack to override the post method as HTML only has GET or POST -->
+      <input type="submit" value="Delete" />
+      </form>
+        <form action="/bookmarks/<%= bookmark.id%>/edit">
+        <input type="submit" value="Edit" />
+        </form>
     </li>
   <% end %>
 </ul>

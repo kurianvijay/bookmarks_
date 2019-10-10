@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 feature '.add bookmarks' do
   scenario 'allows a user to add a bookmark' do
     visit('/bookmarks/new')
